@@ -67,13 +67,9 @@ To use [GloVe pretrained word embeddings](https://nlp.stanford.edu/projects/glov
 
 ### Specialized Shared Encoders
 
-#### OpenAI GPT
+#### BERT, XLNet, GPT, GPT-2, Transformer-XL, XLM or RoBERTa
 
-To use the OpenAI transformer model, set `openai_transformer = 1`, download the [model](https://github.com/openai/finetune-transformer-lm) folder that contains pre-trained models, and place it under `jiant/openai_transformer_lm/pytorch_huggingface/`.
-
-#### BERT or XLNet
-
-To use [BERT](https://arxiv.org/abs/1810.04805) or [XLNet](https://arxiv.org/abs/1906.08237), set ``input_module`` to one of the relevant model names summarized in [defaults.conf](https://github.com/nyu-mll/jiant/blob/master/config/defaults.conf) and listed in full [here](https://huggingface.co/pytorch-transformers/pretrained_models.html), e.g. ``bert-base-cased``. When using these models, we generally follow the procedures set out in the original works as closely as possible: For pair sentence tasks, we concatenate the sentences with a special `[SEP]` token. Rather than max-pooling, we take the representation of the  the special `[CLS]` token as the representation of the entire sequence. We also have support for the version of Adam that was used in training BERT (``optimizer = bert_adam``).
+To use [BERT](https://arxiv.org/abs/1810.04805), [XLNet](https://arxiv.org/abs/1906.08237), [GPT](https://openai.com/blog/language-unsupervised/), [GPT-2](https://openai.com/blog/better-language-models/), [Transformer-XL](https://arxiv.org/abs/1901.02860), [XLM](https://arxiv.org/abs/1901.07291) or [RoBERTa](https://arxiv.org/abs/1907.11692) set ``input_module`` to one of the relevant model names summarized in [defaults.conf](https://github.com/nyu-mll/jiant/blob/master/config/defaults.conf) and listed in full [here](https://huggingface.co/pytorch-transformers/pretrained_models.html), e.g. ``bert-base-cased``. We generally follow the procedures set out in the original works as closely as possible: For single sentence tasks, we add special boundry tokens to the sentence. For pair sentence tasks, we concatenate the sentences, with special boundry and separator tokens specified in the original work (e.g. For BERT, `[CLS]` and `[SEP]`). If you choose ``pool_type = auto``, we will take the representation from the designated location (e.g. For BERT, from the first token, where `[CLS]` resides) as the representation of the entire sequence. We also have support for the version of Adam that was used in training BERT (``optimizer = bert_adam``). When using these models, it is preferable to set ``tokeizer = auto``.
 
 [`copa_bert.conf`](https://github.com/nyu-mll/jiant/blob/master/config/copa_bert.conf) shows an example setup using BERT on a single task, and can serve as a reference. 
 
